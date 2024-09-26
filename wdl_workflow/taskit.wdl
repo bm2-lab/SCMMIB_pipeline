@@ -1333,6 +1333,7 @@ task run_StabMap {
             ~{input_path} \
             ~{output_path}/run_StabMap \
             ~{write_json(config)} \
+            TRUE \
             &> ~{output_path}/monitor/run_StabMap.txt
 
             conda deactivate
@@ -1368,10 +1369,11 @@ task run_MIDAS {
             conda activate scmidas 
             
             ~{software}/time -f 'Elapsed time: %E\nMemory usage: %M KB\nCPU usage: %P' \
-            Rscript ~{method_path}/run_MIDAS.R \
+            python ~{method_path}/run_MIDAS.py \
             ~{input_path} \
             ~{output_path}/run_MIDAS \
             ~{write_json(config)} \
+            True \
             &> ~{output_path}/monitor/run_MIDAS.txt
 
             conda deactivate
@@ -1407,10 +1409,11 @@ task run_scVAEIT {
             conda activate scVAEIT 
             
             ~{software}/time -f 'Elapsed time: %E\nMemory usage: %M KB\nCPU usage: %P' \
-            Rscript ~{method_path}/run_scVAEIT.R \
+            python ~{method_path}/run_scVAEIT.py \
             ~{input_path} \
             ~{output_path}/run_scVAEIT \
             ~{write_json(config)} \
+            True \
             &> ~{output_path}/monitor/run_scVAEIT.txt
 
             conda deactivate
@@ -1446,7 +1449,7 @@ task run_scmomat {
             conda activate scmomat 
             
             ~{software}/time -f 'Elapsed time: %E\nMemory usage: %M KB\nCPU usage: %P' \
-            Rscript ~{method_path}/run_scmomat.R \
+            python ~{method_path}/run_scmomat.py \
             ~{input_path} \
             ~{output_path}/run_scmomat \
             ~{write_json(config)} \
@@ -1485,7 +1488,7 @@ task run_SpatialGlue {
             conda activate spglue_env
             
             ~{software}/time -f 'Elapsed time: %E\nMemory usage: %M KB\nCPU usage: %P' \
-            Rscript ~{method_path}/run_SpatialGlue.R \
+            python ~{method_path}/run_SpatialGlue.py \
             ~{input_path} \
             ~{output_path}/run_SpatialGlue \
             ~{write_json(config)} \

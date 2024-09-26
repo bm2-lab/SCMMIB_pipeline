@@ -13,8 +13,18 @@ import numpy as np
 import scipy.sparse as sp
 import scipy.linalg
 
-import torch
-used_device = torch.device('cuda:2' if torch.cuda.is_available() else 'cpu')
+
+from nvitop import Device
+devices = Device.all()  # or Device.cuda.all()
+memory_free = [device.memory_free() for device in devices]
+gpu_index = memory_free.index(max(memory_free))
+print(gpu_index)
+print(memory_free)
+torch.cuda.set_device(gpu_index)
+torch.set_num_threads(5)
+
+used_device = torch.device()
+# used_device = torch.device('cuda:2' if torch.cuda.is_available() else 'cpu')
 
 
 section_ids = ['Dataset11_Human_Lymph_Node_A1', 'Dataset12_Human_Lymph_Node_D1']

@@ -142,5 +142,6 @@ def midas_module(input_path,
 
 midas_module(input_path = sys.argv[1],
              output_path = sys.argv[2],
-             config = json.load(open(sys.argv[3]))
+             config = json.load(open(sys.argv[3])),
+             impute = sys.argv[4]
             )

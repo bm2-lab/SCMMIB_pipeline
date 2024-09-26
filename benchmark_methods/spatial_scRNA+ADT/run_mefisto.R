@@ -1,14 +1,12 @@
-# 输入变量
+
 
 ADT_h5ad_path = '/home/wsg/BM/data/SPATIAL/RNA+ADT/lymph_node/lymph_node-CITE_seq-raw-ADT-counts.rds'
 RNA_h5ad_path = '/home/wsg/BM/data/SPATIAL/RNA+ADT/lymph_node/lymph_node-CITE_seq-raw-RNA-counts.rds'
-mefisto_embed_path = "/home/sirm/project/SCMMIB/task/spatial_scRNA+ADT/accuracy/lymph_node/mefisto/RUN_1" # embedding输出路径
+mefisto_embed_path = "/home/sirm/project/SCMMIB/task/spatial_scRNA+ADT/accuracy/lymph_node/mefisto/RUN_1" # embedding
 
-# 指定后再加载mofa，否则找不到python版本的mofapy2和numpy.a
-# Sys.setenv(RETICULATE_PYTHON = "/home/wsg/software/miniconda3/envs/benchmark/bin/python")
+# Must import python in mefisto env, as mofa/mefisto requires correction mofapy2 version!
 Sys.setenv(RETICULATE_PYTHON = "/home/shaliu_fu/miniconda3/envs/mefisto_env/bin/python")
 # .libPaths("/home/wsg/R/conda-library/4.2")
-# 必要的包是seurat, mofa2, matrix, dplyr(自己转表格)，基因组，Signac，data.table
 library(MOFA2)
 library(tidyverse)
 library(cowplot)
@@ -27,7 +25,7 @@ library(SeuratDisk)
 # library(anndata)
 library(here)
 .libPaths()
-packageVersion('MOFA2') # 必须1.1.4以上
+packageVersion('MOFA2') # >1.1.4
 rna_counts = readRDS(RNA_h5ad_path)
 adt_counts = readRDS(ADT_h5ad_path)
 

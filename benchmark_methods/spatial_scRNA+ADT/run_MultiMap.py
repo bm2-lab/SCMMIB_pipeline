@@ -1,9 +1,19 @@
 import argparse
 import subprocess
 import os
-# 创建命令行解析器
+
+
+import scanpy as sc
+import anndata
+import MultiMAP
+import pandas as pd
+import muon
+sc.settings.set_figure_params(dpi=80)
+from glob import glob
+
+
 parser = argparse.ArgumentParser(description='noimputation_mosaic_RNA_ADT')
-# 添加布尔类型参数
+
 parser.add_argument('--h5ad_path', type=str, help='h5ad_path')
 parser.add_argument('--index', type=str, help='index')
 parser.add_argument('--gpu_index',  type=str, help='gpu_index')
@@ -22,19 +32,6 @@ if not os.path.isdir(target_folder):
     subprocess.run(cmd,shell=True)
 latent_embed_path =os.path.join(target_folder,f'RUN_{index}',f'{method}_latent.csv')
 
-
-
-
-
-
-
-import scanpy as sc
-import anndata
-import MultiMAP
-import pandas as pd
-import muon
-sc.settings.set_figure_params(dpi=80)
-from glob import glob
 
 RNA_data_path = glob(f'{h5ad_path}/*RNA-counts.h5ad')[0]
 ADT_data_path = glob(f'{h5ad_path}/*ADT-counts.h5ad')[0]
@@ -60,10 +57,10 @@ rna.obsm['X_pca'] = rna_pca.obsm['X_pca'].copy()
 adt_pca = adt.copy()
 muon.prot.pp.clr(adt_pca)
 
-sc.pp.pca(adt_pca,n_comps=10) #维度必须同RNA一样，并且小于蛋白数量
+sc.pp.pca(adt_pca,n_comps=10)
 adt.obsm['X_pca'] = adt_pca.obsm['X_pca'].copy()
-adata1 = MultiMAP.matrix.MultiMAP([rna.obsm['X_pca'],adt.obsm['X_pca']])[2] # rna和adt共同映射
-adata2 = MultiMAP.matrix.MultiMAP([adata1,rna.obsm['spatial']])[2] # 然后将2维空间和spatial共同映射
+adata1 = MultiMAP.matrix.MultiMAP([rna.obsm['X_pca'],adt.obsm['X_pca']])[2] 
+adata2 = MultiMAP.matrix.MultiMAP([adata1,rna.obsm['spatial']])[2] 
 
 
 n = len(rna.obs.index)

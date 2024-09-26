@@ -1,8 +1,8 @@
 # SCMMIB_pipeline
 
-This folder is a sub-project of SCMMIB project. The main project github folder is at https://github.com/bm2-lab/SCMMI_Benchmark. 
+This SCMMIB_pipeline folder is a sub-project of SCMMIB project. The main project github folder is at https://github.com/bm2-lab/SCMMI_Benchmark. 
 
-SCMMIB_pipeline contains:
+**SCMMIB_pipeline** contains:
 1. [preprocessing_scripts](preprocessing_scripts/): including scripts to generate the gene activity matrix for part of unpaired scRNA and scATAC integration methods, and a introduction to these scripts.
 
 2. [envs](envs/): including conda environment yaml files for 40 benchmark algorithms, and an example to use the env files.

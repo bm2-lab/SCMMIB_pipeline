@@ -8,66 +8,66 @@ import anndata
 import MultiMAP
 import pandas as pd
 import muon
+import numpy as np
 sc.settings.set_figure_params(dpi=80)
 from glob import glob
+import sys
+import json
 
 
-parser = argparse.ArgumentParser(description='noimputation_mosaic_RNA_ADT')
+def MultiMAP_module(input_path,
+                   output_path,
+                   config
+                  ):
+    # Make Dir
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
 
-parser.add_argument('--h5ad_path', type=str, help='h5ad_path')
-parser.add_argument('--index', type=str, help='index')
-parser.add_argument('--gpu_index',  type=str, help='gpu_index')
+    # Load data
+    rna = sc.read_h5ad(os.path.join(input_path, config['rna_h5ad_filename']))
+    adt = sc.read_h5ad(os.path.join(input_path, config['adt_h5ad_filename']))
 
-args = parser.parse_args()
+    rna.var_names_make_unique()
+    adt.var_names_make_unique()
 
-h5ad_path = args.h5ad_path
-index = args.index
-gpu_index = int(args.gpu_index)
+    # Load Metadata
+    metadata = pd.read_csv(os.path.join(input_path, config['metadata']), header=0)
+    metadata.index=metadata[config['barcode_key']].values
+    adata_omics1 = rna
+    adata_omics2 = adt
+    # adata_omics1 = sc.read_h5ad(f'{file_fold}/adata_RNA.h5ad')
+    # adata_omics2 = sc.read_h5ad(f'{file_fold}/adata_ADT.h5ad')
 
-
-method = 'multimap'
-target_folder = h5ad_path.replace('/home/wsg/BM/data','/home/sirm/project/SCMMIB') + '/'+method
-if not os.path.isdir(target_folder):
-    cmd = f'mkdir -p {target_folder}'
-    subprocess.run(cmd,shell=True)
-latent_embed_path =os.path.join(target_folder,f'RUN_{index}',f'{method}_latent.csv')
-
-
-RNA_data_path = glob(f'{h5ad_path}/*RNA-counts.h5ad')[0]
-ADT_data_path = glob(f'{h5ad_path}/*ADT-counts.h5ad')[0]
-# read data
-#file_fold = '/home/shaliu_fu/joint_bench/demo_notebook/input/spatial/human_lymph_node/' #please replace 'file_fold' with the download path
-adata_omics1 = sc.read_h5ad(RNA_data_path)
-adata_omics2 = sc.read_h5ad(ADT_data_path)
-# adata_omics1 = sc.read_h5ad(f'{file_fold}/adata_RNA.h5ad')
-# adata_omics2 = sc.read_h5ad(f'{file_fold}/adata_ADT.h5ad')
-
-adata_omics1.var_names_make_unique()
-adata_omics2.var_names_make_unique()
-rna = adata_omics1
-adt = adata_omics2
-sc.pp.normalize_total(rna, target_sum=1e4)
-sc.pp.log1p(rna)
+    adata_omics1.var_names_make_unique()
+    adata_omics2.var_names_make_unique()
+    rna = adata_omics1
+    adt = adata_omics2
+    sc.pp.normalize_total(rna, target_sum=1e4)
+    sc.pp.log1p(rna)
 
 
-rna_pca = rna.copy()
-sc.pp.pca(rna_pca,n_comps=10)
-rna.obsm['X_pca'] = rna_pca.obsm['X_pca'].copy()
+    rna_pca = rna.copy()
+    sc.pp.pca(rna_pca,n_comps=10)
+    rna.obsm['X_pca'] = rna_pca.obsm['X_pca'].copy()
 
-adt_pca = adt.copy()
-muon.prot.pp.clr(adt_pca)
+    adt_pca = adt.copy()
+    muon.prot.pp.clr(adt_pca)
 
-sc.pp.pca(adt_pca,n_comps=10)
-adt.obsm['X_pca'] = adt_pca.obsm['X_pca'].copy()
-adata1 = MultiMAP.matrix.MultiMAP([rna.obsm['X_pca'],adt.obsm['X_pca']])[2] 
-adata2 = MultiMAP.matrix.MultiMAP([adata1,rna.obsm['spatial']])[2] 
+    sc.pp.pca(adt_pca,n_comps=10)
+    adt.obsm['X_pca'] = adt_pca.obsm['X_pca'].copy()
+    adata1 = MultiMAP.matrix.MultiMAP([rna.obsm['X_pca'],adt.obsm['X_pca']])[2] 
+    adata2 = MultiMAP.matrix.MultiMAP([adata1,rna.obsm['spatial']])[2] 
 
+    n = len(rna.obs.index)
+    tmp1 = adata2[:n,:]
+    tmp2 = adata2[n:2*n,:]
+    tmp3 = adata2[2*n:,:]
 
-n = len(rna.obs.index)
-tmp1 = adata2[:n,:]
-tmp2 = adata2[n:2*n,:]
-tmp3 = adata2[2*n:,:]
-import numpy as np
-latent = pd.DataFrame(np.c_[tmp1,tmp2,tmp3],index=rna.obs.index)
+    latent = pd.DataFrame(np.c_[tmp1,tmp2,tmp3],index=rna.obs.index)
+    latent_embed_path = os.path.join(output_path, config["output_prefix"] + "-MultiMAP-multi-latent.csv")
+    latent.to_csv(latent_embed_path)
 
-latent.to_csv(latent_embed_path)
+MultiMAP_module(input_path = sys.argv[1], 
+                output_path = sys.argv[2],
+                config = json.load(open(sys.argv[3]))
+               )

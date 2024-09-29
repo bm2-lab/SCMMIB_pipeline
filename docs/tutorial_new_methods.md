@@ -18,15 +18,16 @@ java -jar cromwell-50.jar run -i inputs.json main.wdl
 
 ### Step4. Calculate the metrics for selected tasks by `scmmib` package
 
-The scmmib package is available at https://github.com/bm2-lab/SCMMI_Benchmark/. The installation manual is available at： https://github.com/bm2-lab/SCMMI_Benchmark/blob/main/README.md.
+The scmmib package is available at  [github](https://github.com/bm2-lab/SCMMI_Benchmark/). The installation manual is available at [documents](https://github.com/bm2-lab/SCMMI_Benchmark/blob/main/README.md).
 
-We provided three examples for differenet integration tasks at: https://github.com/bm2-lab/SCMMI_Benchmark/blob/main/docs/scmmib_demo.py. <br> 
+We provided three examples for differenet tasks at: [demos](https://github.com/bm2-lab/SCMMI_Benchmark/blob/main/docs/scmmib_demo.py). <br> 
 
-The reference manual for all functions and parameters is available at: https://github.com/bm2-lab/SCMMI_Benchmark/blob/main/docs/scmmib_py_manual.md. <br>
+The reference manual for all functions and parameters is available at [documents](https://github.com/bm2-lab/SCMMI_Benchmark/blob/main/docs/scmmib_py_manual.md). <br>
 
 ### Step5. Plot summary table for new method along with SCMMIB benchmark methods
-The metrics summary tables for all SCMMIB integration tasks are available at https://github.com/bm2-lab/SCMMI_Benchmark/tree/main/manuscript_figure_script_and_data/stage2_res/SCMMIB_metrics_final.<br> 
-And the analysis code for summary table in each integration task at https://github.com/bm2-lab/SCMMI_Benchmark/tree/main/manuscript_figure_script_and_data/stage2_script. Users can compared the metrics output of new_method with our benchmark methods with the reproducible scripts. <br>
+The metrics summary tables for all SCMMIB datasets are available at [scmmib github folder](https://github.com/bm2-lab/SCMMI_Benchmark/tree/main/manuscript_figure_script_and_data/stage2_res/SCMMIB_metrics_final).<br>
+
+And the analysis code for summary table in each integration task at [reproducible folder](https://github.com/bm2-lab/SCMMI_Benchmark/tree/main/manuscript_figure_script_and_data/stage2_script). Users can compared the metrics output of new_method with our benchmark methods with the reproducible scripts. <br>
 
 A simple example of output figure in our manuscript is here:
 ![rank_plot](./pair_RNA_ATAC_robustness.png).

@@ -1,10 +1,17 @@
-### WDL usage
+### 1. WDL usage
 
 cromwell.jar file can be downloaded from https://github.com/broadinstitute/cromwell. <br>
 A breif introduction of WDL and cromwell is available at https://cromwell.readthedocs.io/en/stable/CommandLine/. 
 
+## 2.Demo of wdl workflow execution
+A example for running single/multiple tasks with wdl script
+```Bash
+java -jar cromwell-50.jar run -i inputs.json main.wdl
+```
+Only inputs.json file is required to be configured for different algorithms and different tasks. 
 
-### inputs.json usage demostration
+
+### 3.Demostration of inputs.json configuration 
 
 ```python
 {
@@ -82,8 +89,77 @@ A breif introduction of WDL and cromwell is available at https://cromwell.readth
     "mefisto":false
   },
 
-  "main.software": "/home/wsg/BM/pipeline/software" # where cromwell-50.jar and time deposited. 
+  "main.software": "/home/wsg/BM/pipeline/software" # where cromwell-50.jar deposited. 
 }
 
 ```
 
+### 4. Demo output of the workflow
+1. output latent files, imputation files (only part of algorithms).
+2. Log file ended with time and memory comsumpation, located in the  `./monitor` folder, an example as following:
+```Bash
+Elapsed time: 29:52.18
+Memory usage: 6624512 KB
+CPU usage: 104%
+```
+Algorithms with GPU accelartion will generate a log file in the same path as latent. The content of this log file is as following:
+```Bash
+,gpu_memory
+device 2,3009MiB
+```
+
+
+### 5. Demostration of adding new algorithms to the wdl pipeline
+
+Here we add a new python method call "new_method" to the `taskit.wdl` as follows:
+```python
+task run_new_method {
+    input {
+        String method_path
+        String input_path
+        String output_path
+        String software
+
+        Map[String, String] config
+    }
+    
+    command {
+        if [ -f ~{output_path}/monitor/run_new_method.txt ]
+        then
+            echo "run_new_method has already been successfully executed and therefore skipped"
+        else
+            mkdir -p ~{output_path}/run_new_method
+            
+            source ~/software/miniconda3/etc/profile.d/conda.sh
+            conda activate new_method_env ## run with you own environment 
+            ## then execute the new method, and summarize the resouce comsumption at the same time.
+
+            ~{software}/time -f 'Elapsed time: %E\nMemory usage: %M KB\nCPU usage: %P' \ 
+            python ~{method_path}/run_new_method.py \
+            ~{input_path} \
+            ~{output_path}/run_new_method \
+            ~{write_json(config)} \
+            &> ~{output_path}/monitor/run_new_method.txt
+
+            conda deactivate
+
+        fi
+    }
+    output {
+    }
+}
+```
+Then add the "new_method" to main.wdl in `workflow main` section as follows:
+```
+if (method["new_method"]) { 
+        call taskit.run_uniPort {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+```
+Finally, add the new_method to `inputs.json` in `main.methods` section for execution as `"new_method":true` and set other algorithms as `false`.  

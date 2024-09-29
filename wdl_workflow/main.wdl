@@ -391,6 +391,82 @@ workflow main {
         }
     }
 
+    if (method["scmomat"]) { 
+        call taskit.run_scmomat {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+
+    if (method["SpatialGlue"]) { 
+        call taskit.run_SpatialGlue {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+
+    if (method["scVAEIT"]) { 
+        call taskit.run_scVAEIT {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+
+    if (method["MIDAS"]) { 
+        call taskit.run_MIDAS {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+
+    if (method["StabMap"]) { 
+        call taskit.run_StabMap {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+
+    if (method["SeuratV5"]) { 
+        call taskit.run_SeuratV5 {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
+
+    if (method["mefisto"]) { 
+        call taskit.run_mefisto {
+            input: 
+                input_path = input_path,
+                output_path = output_path,
+                config = config,
+                method_path = method_path,
+                software = software
+        }
+    }
 }
 
 # task monitor

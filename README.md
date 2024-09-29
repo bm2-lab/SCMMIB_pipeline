@@ -1,5 +1,6 @@
-# SCMMIB_pipeline
+# SCMMIB pipeline for 65 benchmark methods
 
+## Introduction
 This SCMMIB_pipeline folder is a sub-project of SCMMIB project. The main project github folder is at https://github.com/bm2-lab/SCMMI_Benchmark. 
 
 **SCMMIB_pipeline** contains:
@@ -14,10 +15,18 @@ This SCMMIB_pipeline folder is a sub-project of SCMMIB project. The main project
 
 The output of all benchmark methods can be evaluated with `scmmib` python package in our project folder https://github.com/bm2-lab/SCMMI_Benchmark. 
 
-### Data availablity
-The pre-processed project data is available at figshare project (https://figshare.com/account/home#/projects/221476). Simluation datasets in SCMMIB study can be generated from the preprocessing scripts.
+## Data availablity
+The pre-processed project data (h5ad, rds and rSeurat format) is available at figshare folder (https://figshare.com/account/home#/projects/221476). Simluation datasets in SCMMIB study can be generated from R scripts in the [data_simulation](preprocessing_scripts/data_simulation/) folder.
 
-### Related manuscript
+## Tutorials 
+1. Tutorial for reproducing all methods and all tasks in SCMMIB project [tutorial 1](docs/tutorial_scmmib.md).
+
+2. Tutorial for applying scmmib pipeline to new integration methods [tutorial 2](docs/tutorial_new_methods.md).
+
+3. Tutorial for applying scmmib pipeline to new benchmark datasets [tutorial 3](docs/tutorial_new_datasets.md).
+
+
+## Related manuscript
 Our stage 1 proposal manuscript is available at https://springernature.figshare.com/articles/journal_contribution/Benchmarking_single-cell_multi-modal_data_integrations/26789572. 
 
 Our stage 2 manuscript is submitted. 

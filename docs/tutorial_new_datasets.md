@@ -41,6 +41,7 @@ The reference manual for all functions and parameters is available at [documents
 
 ### Step5. Plot summary table for benchmark methods
 The metrics summary tables for all SCMMIB datasets are available at [scmmib github folder](https://github.com/bm2-lab/SCMMI_Benchmark/tree/main/manuscript_figure_script_and_data/stage2_res/SCMMIB_metrics_final.)<br>
+
  Users can compare the peformance of methods in new dataset with our benchmark datasets with metrics scores in each dataset.<br> 
 
 A simple example of output figure in our manuscript is here:

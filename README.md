@@ -16,7 +16,7 @@ This SCMMIB_pipeline folder is a sub-project of SCMMIB project. The main project
 The output of all benchmark methods can be evaluated with `scmmib` python package in our project folder https://github.com/bm2-lab/SCMMI_Benchmark. 
 
 ## Data availablity
-The pre-processed project data (h5ad, rds and rSeurat format) is available at figshare folder (https://figshare.com/account/home#/projects/221476). Simluation datasets in SCMMIB study can be generated from R scripts in the [data_simulation](preprocessing_scripts/data_simulation/) folder.
+The pre-processed project data (h5ad, rds and rSeurat format) is available at figshare folder (https://doi.org/10.6084/m9.figshare.27161451.v1). Simluation datasets in SCMMIB study can be generated from R scripts in the [data_simulation](preprocessing_scripts/data_simulation/) folder.
 
 ## Tutorials 
 1. Tutorial for reproducing all methods and all tasks in SCMMIB project [tutorial 1](docs/tutorial_scmmib.md).

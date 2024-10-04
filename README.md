@@ -26,7 +26,9 @@ The pre-processed project data (h5ad, rds and rSeurat format) is available at fi
 3. Tutorial for applying scmmib pipeline to new benchmark datasets [tutorial 3](docs/tutorial_new_datasets.md).
 
 
-## Related manuscript
-Our stage 1 proposal manuscript is available at https://springernature.figshare.com/articles/journal_contribution/Benchmarking_single-cell_multi-modal_data_integrations/26789572. 
+## Citation
+#### Stage 1 manuscript
+Fu, Shaliu; Wang, Shuguang; Si, Duanmiao; Li, Gaoyang; Gao, Yawei; Liu, Qi (2024). Benchmarking single-cell multi-modal data integrations. figshare. Journal contribution. https://doi.org/10.6084/m9.figshare.26789572.v1
 
-Our stage 2 manuscript is submitted. 
+#### Datasets
+SCMMIB project processed datasets. figshare. Dataset. https://doi.org/10.6084/m9.figshare.27161451.v2

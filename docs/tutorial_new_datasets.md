@@ -1,6 +1,9 @@
 ## Tutorial 3: Step by step tutorial to run SCMMIB pipeline for new single-cell multimodal datasets
 
 ### Step 1. Install the conda environment for benchmark methods in envs folder
+All conda environment files are available at [env folder](../envs/).
+The required environment file for each method is available in [WDL file](../wdl_workflow/taskit.wdl).  
+
 Here is an example:
 ```Bash
 conda env create -f benchmark_env.yaml
